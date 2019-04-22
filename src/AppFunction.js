@@ -11,7 +11,7 @@ const App = () => {
   const [mousePos, setMousePos] = useState({ x: null, y: null });
   const [status, setStatus] = useState(navigator.onLine);
   // ⬆️☝ that means I can set state directly from props
-  const [location, setLocation] = useState(initLocationState);
+  const [{ lat, lng, speed }, setLocation] = useState(initLocationState);
 
   //⬇️ Creating a boolean for cleaning up getCurrentPosition()
   //since it doesn't have a easy clean up method
@@ -26,7 +26,7 @@ const App = () => {
     const watchId = navigator.geolocation.watchPosition(handleGeolocation);
 
     //return to clean up any side effects
-    //sort of like componentWillUnmount()
+    //similar to componentWillUnmount()
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('online', handleOnline);
@@ -102,9 +102,9 @@ const App = () => {
       </p>
 
       <h2>Geo Location</h2>
-      <p>Lat: {location.lat}</p>
-      <p>Lng: {location.lng}</p>
-      <p>Your Speed is {location.speed ? location.speed : '0'}</p>
+      <p>Lat: {lat}</p>
+      <p>Lng: {lng}</p>
+      <p>Your Speed is {speed ? speed : '0'}</p>
     </>
   );
 };
