@@ -4,7 +4,8 @@ import './index.css';
 // import App from './App';
 // import App from './AppFunction';
 // import App from './Login';
-import App from './Register';
+// import App from './components/intro/Register';
+import App from './components/news/App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));

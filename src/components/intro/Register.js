@@ -13,6 +13,7 @@ export default function Register() {
   const handleChange = event => {
     // ⬇️ also need to add on the rest of the form data
     // to setForm to update properly
+    //usestate behavior is different this way for setState
     setForm({
       ...form,
       [event.target.name]: event.target.value
