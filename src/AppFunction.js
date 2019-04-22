@@ -4,6 +4,10 @@ const App = () => {
   const [count, setCount] = useState(0);
   const [on, setOn] = useState(false);
 
+  useEffect(() => {
+    document.title = `Clicked ${count} Times.`;
+  });
+
   const incrementCount = () => {
     setCount(count + 1);
   };

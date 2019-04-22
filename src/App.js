@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
-import { className } from 'postcss-selector-parser';
 
 class App extends Component {
   state = {
     count: 0,
     on: false
   };
+
+  componentDidMount() {
+    document.title = `Clicked ${this.state.count} Times.`;
+  }
+
+  componentDidUpdate() {
+    document.title = `Clicked ${this.state.count} Times.`;
+  }
 
   incrementCount = () => {
     this.setState(({ count }) => ({ count: count + 1 }));
