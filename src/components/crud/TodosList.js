@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import TodosContext from './Context';
+import axios from 'axios';
 
 export default function TodosList() {
   const { state, dispatch } = useContext(TodosContext);
@@ -19,10 +20,16 @@ export default function TodosList() {
             className="flex items-center bg-orange-dark border-black border-dashed border-2 my-2 py-4"
           >
             <span
-              onDoubleClick={() =>
-                dispatch({ type: 'TOGGLE_TODO', payload: todo })
-              }
-              className={`flex-1 ml-12 cursor-pointer ${todo.completed &&
+              onDoubleClick={async () => {
+                const resp = await axios.patch(
+                  `https://hooks-api-f0kgitji5.now.sh/todos/${todo.id}`,
+                  {
+                    complete: !todo.complete
+                  }
+                );
+                dispatch({ type: 'TOGGLE_TODO', payload: resp.data });
+              }}
+              className={`flex-1 ml-12 cursor-pointer ${todo.complete &&
                 'line-through text-grey-darkest'}`}
             >
               {todo.text}
@@ -38,12 +45,15 @@ export default function TodosList() {
               />
             </button>
             <button
-              onClick={() =>
+              onClick={async () => {
+                await axios.delete(
+                  `https://hooks-api-f0kgitji5.now.sh/todos/${todo.id}`
+                );
                 dispatch({
                   type: 'REMOVE_TODO',
                   payload: todo
-                })
-              }
+                });
+              }}
             >
               <img
                 src="http://icon.now.sh/delete/8b0000"

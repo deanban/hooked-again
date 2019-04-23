@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import TodosContext from './Context';
+import axios from 'axios';
+import uuidv4 from 'uuid/v4';
 
 export default function TodoForm() {
   const [todo, setTodo] = useState('');
@@ -17,13 +19,25 @@ export default function TodoForm() {
     }
   }, [currentTodo.id]);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
     if (currentTodo.text) {
-      dispatch({ type: 'UPDATE_TODO', payload: todo });
+      const resp = await axios.patch(
+        `https://hooks-api-f0kgitji5.now.sh/todos/${currentTodo.id}`,
+        { text: todo }
+      );
+      dispatch({ type: 'UPDATE_TODO', payload: resp.data });
     } else {
-      dispatch({ type: 'ADD_TODO', payload: todo });
+      const resp = await axios.post(
+        'https://hooks-api-f0kgitji5.now.sh/todos',
+        {
+          id: uuidv4(),
+          text: todo,
+          complete: false
+        }
+      );
+      dispatch({ type: 'ADD_TODO', payload: resp.data });
     }
 
     setTodo('');
