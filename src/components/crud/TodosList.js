@@ -28,7 +28,9 @@ export default function TodosList() {
               {todo.text}
             </span>
 
-            <button>
+            <button
+              onClick={() => dispatch({ type: 'SET_CURRENT', payload: todo })}
+            >
               <img
                 src="http://icon.now.sh/edit/0050c5"
                 alt="Edit Icon"
